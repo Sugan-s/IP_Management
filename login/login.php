@@ -11,18 +11,18 @@
     <title>IP Management | Login</title>
 
     <!-- Bootstrap -->
-    <link href="frontend/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../frontend/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
-    <link href="frontend/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <link href="../frontend/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
     <!-- NProgress -->
-    <link href="frontend/vendors/nprogress/nprogress.css" rel="stylesheet">
+    <link href="../frontend/vendors/nprogress/nprogress.css" rel="stylesheet">
     <!-- Animate.css -->
-    <link href="frontend/vendors/animate.css/animate.min.css" rel="stylesheet">
+    <link href="../frontend/vendors/animate.css/animate.min.css" rel="stylesheet">
 
     <!-- Custom Theme Style -->
-    <link href="frontend/build/css/custom.min.css" rel="stylesheet">
-    <script src="frontend/production/js/sweetalert2.all.min.js"></script>
-    <script src="frontend/production/js/jquery.min.js"></script>
+    <link href="../frontend/build/css/custom.min.css" rel="stylesheet">
+    <script src="../frontend/production/js/sweetalert2.all.min.js"></script>
+    <script src="../frontend/production/js/jquery.min.js"></script>
 </head>
 
 <body class="login">
@@ -33,19 +33,21 @@
     <div class="login_wrapper">
         <div class="animate form login_form">
             <section class="login_content">
-                <form>
+                <form action="loginCredentials.php" method="post">
                     <h1>Login Form</h1>
                     
                     <br>
                     <div>
-                        <input type="text" class="form-control" placeholder="Username" id="email" required="" />
+                        <input type="text" class="form-control" placeholder="Username" name="userid" id="userid" required="" />
                     </div>
                     <div>
-                        <input type="password" class="form-control" placeholder="Password" id= "password" required="" />
+                        <input type="password" class="form-control" placeholder="Password" name="password" id= "password" required="" />
                     </div>
-				    <div>
-                        <a class="btn btn-default submit" id="login">Login</a>
-						<br>
+			<div>
+                        
+                        <button type="submit" class="btn btn-success" name="submit" value="submit"> Login</button>
+                    </div>
+                    <div>
                         <a class="reset_pass" href="#">Forgot your password?</a>
                         
                     </div>
@@ -57,7 +59,10 @@
         </div>
     </div>
 </div>
-<script src="frontend/build/js/login.js"></script>
+   
+<script src=""></script>
 </body>
 </html>
+
+
 
