@@ -1,9 +1,9 @@
   <?php
 //session_start();
 if (isset($_POST["submit"])) {
-//include 'DbConnection.php';
+include '../DbConnection.php';
     
-   require 'vendor/autoload.php';
+   //require 'vendor/autoload.php';
     
     $ipAddress = $_POST['ipAddress'];
     $subNetBit = $_POST['subNetBit'];
@@ -17,11 +17,6 @@ if (isset($_POST["submit"])) {
     $totalSubNets = pow(2,$subNetBitCount);
     
     $splitedip = explode('.', $ipAddress);
-
-//foreach($exploded as $part) {
-//  print($part);
-    
-//    echo $splitedip[2];
      $con = new MongoDB\Client("mongodb://203.94.64.80:27017");
    $db = $con->IpManagementDev;
    $col = $db->mainIp;
@@ -55,7 +50,10 @@ if (isset($_POST["submit"])) {
          echo $subnetworkAddress;
         $insertSubnet=array(
        
-       'subnetworkAddress'=>$subnetworkAddress
+       'subnetworkAddress'=>$subnetworkAddress,
+        'service'=>'#12e826',
+        'assignDate'=>'null',
+         'assignBy'=>'null'
             
    );
       $sunttedCol_insert->insertOne($insertSubnet);  
@@ -64,7 +62,7 @@ if (isset($_POST["submit"])) {
     
     
                 
-  header("Location: frontend/home.php");
+  header("Location: ../frontend/home.php");
   //echo 'Successfully insert';
    } 
  else {
@@ -72,35 +70,7 @@ if (isset($_POST["submit"])) {
               
        }      
 
-       
-      
-   
-  
-
-//  $col->insert($insert);
- 
-    
-   
   
 }
-   // $password = md5($_POST['password']);
-    
-//    $database = new dbConnect();
-//    
-//    $db = $database->openConnection();
-//    
-//    $sql = "select * from tbl_registered_users where email = '$email' and password= '$password'";
-//    $user = $db->query($sql);
-//    $result = $user->fetchAll(PDO::FETCH_ASSOC);
-//    
-//    $id = $result[0]['id'];
-//    $name = $result[0]['name'];
-//    $email = $result[0]['email'];
-//    $_SESSION['name'] = $name;
-//    $_SESSION['id'] = $id;
-//    
-//    $database->closeConnection();
-//    header('location: dashboard.php');
 
-?>
 

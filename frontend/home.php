@@ -1,3 +1,6 @@
+<?php
+session_start();// Right at the top of your script
+?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -28,6 +31,7 @@
 
     <!-- Custom Theme Style -->
     <link href="build/css/custom.min.css" rel="stylesheet">
+    <link href="build/css/custom.css" rel="stylesheet">
   </head>
 
   <body class="nav-md">
@@ -48,6 +52,17 @@
               </div>
               <div class="profile_info">
                 <span>Welcome,</span>
+                <?php 
+                 
+                  if($_SESSION['logged']==true)
+                   { 
+                      $usr="<h2>".$_SESSION["name"]."</h2>";
+                      echo $usr;
+                   }
+                else {
+                      header("Location:../login/login.php");
+                    }
+                ?>
                 <h2><div id="userwelcome"></div></h2>
               </div>
             </div>
@@ -61,7 +76,9 @@
                 <ul class="nav side-menu">
                   <li><a><i class="fa fa-home"></i> Home <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
-                      <li><a href="home.html">Dashboard</a></li>
+                        <li><a href="home.php">Dashboard</a></li>
+                        <li><a href="../service/addNewService.php">Add Service</a></li>
+                        <li><a href="../mainBlock/addNewMainBlock.php">Add New Main Block</a></li>
                     </ul>
                   </li>
                   
@@ -107,8 +124,8 @@
                   <ul class="dropdown-menu dropdown-usermenu pull-right">
                     
                       <li><a href="../register/register.php"> <i class="fa fa-user-plus pull-right"></i> Add new user</a></li>
-                      <li><a href="../login/login.php" ><i class="fa fa-sign-out pull-right"></i> Log Out</a></li>
-                  </ul>
+                      <li><a href="../login/logout.php"><i class="fa fa-sign-out pull-right"></i> Log Out</a></li> 
+           </ul>
                 </li>
 
                 
@@ -117,11 +134,8 @@
           </div>
         </div>
         <!-- /top navigation -->
-        <!-- login -->
-    
-
         <!-- page content -->
-        <div class="right_col" role="main" >
+        <div class="right_col"  role="main">
          <div class="">
       		 <div class="title_left">
                 <h3>IP Management Main Blog</h3>
@@ -129,9 +143,9 @@
              
 				</br>
                                 
-                                <div class="clearfix">
+                             <div class="clearfix">
                                 <div class="col-md-6 col-sm-6 col-xs-12">                              
-                       		
+                                    <table class="table table-bordered table-striped table-sm table-hover" style="width:720px;" name="catagory" id="catagory">
                                  <?php
 
                     include '../DbConnection.php';
@@ -143,36 +157,42 @@
                     {
                          echo $exc->getTraceAsString();
                     }
-
+//style='width:100%'
             //table load
-                 $data  = "<table class='table table-bordered table-striped table-sm table-hover table-default table-responsive' style='width: 50px;'>";
+                    
+                 //$data  = "<table class='table table-bordered table-striped table-sm table-hover' style='width:1130px;' name='catagory' id='catagory'>";
+                 //$data .="<col width='50'>";
           try{
               $mainip_col=$db->mainIp;
               $mainip_ob=$mainip_col->find();
               $count=0;
               foreach ($mainip_ob as $doc)
               {
-                //$data = "<table class='table table-bordered table-striped table-sm table-hover table-default table-responsive' style='width: 50px;'>"; 
-                $data .= "<tbody>";
-                     $data .= "<tr>";
+                     $data = "<tbody>";
+                     //$data .= "<tr >";
                      $data .="<h3>"; 
                 $data .= "<h3>".$doc["networkAddress"]."/".$doc["subnetBit"]."</h3>";
                   $tbname=$doc["networkAddress"]."/".$doc["subnetBit"];
-                   $data .="<br>";
                      $col = $db->$tbname;
                 $cursor = $col->find();
+                $count=0;
                      foreach($cursor as $document){
-          
-                         $data .= "<th>"."<a href='../subnetblock.php'>". $document["subnetworkAddress"] ."</a>"."</th>";
-            
+                        
+                         if($count %16 == 0)
+                         {
+                               //$data .="</tr>";
+                               $data .="<tr style='width:100%'>";
+                          }
+                        
+                            $data .= "<th style='max-width: 20px;' bgcolor=".$document["service"].">"."<a href='../subnet/subnetblock.php'>". $document["subnetworkAddress"] ."</a>"."</th>";
+                           $count++;
                      }
                      $data .="</h3>";
                        $data .= "</tr>";
                      $data .= "</tbody>";
-                    $data .= "</table>";
-                      $data .="<br>";
-                   $data .="<br>";
-                  $data  .= "<table class='table table-bordered table-striped table-sm table-hover table-default table-responsive' style='width: 50px;'>";
+                    //$data .= "</table>";
+                    
+                  //$data  .= "<table class='table table-bordered table-striped table-sm table-hover' style='width:1130px;' name='catagory' id='catagory'>";
               }
       
         echo $data;
@@ -183,47 +203,67 @@
         exit;
     }
              ?>
-				<!--service table-->
-				<table class="table table-bordered table-sm table-hover table-default">
+                                        </table>
+	<!--service table-->
+        <table class="table table-bordered table-sm table-hover table-default" style="width: 100px;">
 	<thead>			
 	<tr>			 
-	<th style="width: 3000px;">Service</th>
-	<th style="width: 100px;">Colour</th>	
+	<th style="width: 100px;">CATEGORY</th>
+	<th style="width: 50px;">COLORS</th>	
 	</tr> 
 	</thead>	
-	<tbody>	
-	<tr>
-	<th>WAN</th>
-	<th>#</th>
-	</tr>	
-	<tr>
-	<th>WAN</th>
-	<th>#</th>
-		</tr>
-	<tr>
-	<th>WAN</th>
-	<th>#</th>
- </tr> 
- </tbody>	
- </table>
+	
+         <?php
+         include '../DbConnection.php';
+         $datas  = "<tbody>";
+        $datas.="<tr>";
+                 try 
+                    {
+                        $dbs = $con->IpManagementDev;
+                    } 
+                    catch (Exception $exc) 
+                    {
+                         echo $exc->getTraceAsString();
+                    }
+                   try 
+                    {
+                        $colorTable=$dbs->services;
+                        $color=$colorTable->find();
+                        foreach ($color as $docs) 
+                        {
+                            $datas .= "<td>".$docs["service"]."</td>";
+                            $datas.="<td bgcolor=".$docs["colourValues"].">"."</td>";
+                            $datas.="</tr>";
+                        }
+                        
+                        $datas .= "</tbody>";
+                        echo $datas;
+                    }
+                    catch(MongoException $mongoException)
+                    {
+                        print $mongoException;
+                        exit;
+                    }
+        ?>
+         </table>
+        <!--/service table-->
 	</div>			
-				</div>
-				
-				
-		
-		</div>
-		</div>
+	</div>
+						
+</div>
+</div>
         <!-- /page content -->
 
         <!-- footer content -->
 		<footer>
           <div class="pull-right">
-              <a href="../addNewMainBlock.php" class="btn btn-success"><i class="fa fa-plus"></i>Add new main block</a>
+<!--              <a href="../addNewMainBlock.php" class="btn btn-success"><i class="fa fa-plus"></i>Add new main block</a>-->
 		  </div>
 		  <div class="clearfix"></div>
 		  </footer>
         
 		<!-- footer content -->
+               
       </div>
     </div>
     <!-- jQuery -->
@@ -260,16 +300,20 @@
     <script src="vendors/jqvmap/dist/jquery.vmap.js"></script>
     <script src="vendors/jqvmap/dist/maps/jquery.vmap.world.js"></script>
     <script src="vendors/jqvmap/examples/js/jquery.vmap.sampledata.js"></script>
-    <!-- bootstrap-daterangepicker -->
-    <script src="vendors/moment/min/moment.min.js"></script>
-    <script src="vendors/bootstrap-daterangepicker/daterangepicker.js"></script>
-    <script src="vendors/datatables.net-keytable/js/dataTables.keyTable.min.js"></script>
+   
      <script src="../frontend/main.js"></script>
     <!-- Custom Theme Scripts -->
     <script src="build/js/custom.min.js"></script>
-         
-    <!-- form inside Scripts -->
-    <script src="../main.js"></script>
-    	
+    <script src="../service/service.js"></script>
+<!--    <script>
+        $(function () {
+    $("#catagory input[type=button]").click(function () {
+         tdValue= $(this).parents('tr').find('td').eq(0).text() ;
+         columnIndex = $(this).parents('tr').find('td').index(this)
+         url= '../service/assignService.php'+columnIndex +'../service/assignService.php?but1='+tdValue    
+        $(location).attr('href',url);
+    }
+});
+        </script>-->
   </body>
 </html>
