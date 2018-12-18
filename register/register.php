@@ -1,5 +1,4 @@
 
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -25,32 +24,49 @@
     <link href="../frontend/build/css/custom.min.css" rel="stylesheet">
     <script src="../frontend/production/js/sweetalert2.all.min.js"></script>
     <script src="../frontend/production/js/jquery.min.js"></script>
+    <style>
+        body  {
+            background-image: url("../frontend/production/images/internet.jpg");
+            background-repeat: no-repeat;
+            background-color: #cccccc;
+            background-size: 2560px 1440px;
+            }
+</style>
 </head>
 
-<body class="login">
+<!--<body class="login" background="../frontend/production/images/SLT.png">-->
+<body  background="../frontend/production/images/sri-lanka-telecom.gif">
 <div>
     <a class="hiddenanchor" id="signup"></a>
     <a class="hiddenanchor" id="signin"></a>
+    
+
 
     <div class="login_wrapper">
         <div class="animate form login_form">
             <section class="login_content">
-                <form action="registerCredentials.php" method="post">
+                <form action="registerCredentials.php" method="post" >
                     <h1>Register Form</h1>
                     
                     <br>
                     <div>
-                        <input type="text" class="form-control" placeholder="UserID" name="usrid" id="usrid" required="" />
+                        <?php
+                         include '../DbConnection.php';
+         $col = $db->user;
+         $num=$col->count();
+         $num_1=$num+1;
+         $prefix="SLT_0";
+         $userid=$prefix.$num_1;
+         echo "<input type='text' class='form-control'name='usrid' id='usrid' required='' readonly=true value=".$userid.">";
+                        ?>
                     </div>
-					<div>
-                                            <input type="text" class="form-control" placeholder="Username" name="name" id="name" required="" />
+                    <div>
+                        <input type="text" class="form-control" placeholder="Username" name="name" id="name" required="" />
                     </div>
 					
 					
-					<div class="form-group">
-                        
-                        
-                                            <select class="form-control"  name="role" id="role" required="">
+			<div class="form-group">
+                           <select class="form-control"  name="role" id="role" required="">
                             <option>Choose Role</option>
                             <option>Admin</option>
                             <option>Standard User</option>
@@ -61,10 +77,11 @@
                       </div>
 					
                     <div>
-                        <input type="password" class="form-control" placeholder="Password" name="password" id= "password" required="" />
+                        <input type="password" data-validate-length="6,8" class="form-control" placeholder="Password" name="password" id= "password" required="" />
                     </div>
                     <div>
                         <button type="submit" class="btn btn-success" name="submit" value="submit"> Register</button>
+                        <a href="../userHandling/userHandling.php"> <button class="btn btn-primary" type="button">Cancel</button> </a>
                     </div>
                     
                     <div class="clearfix"></div>
@@ -74,7 +91,8 @@
         </div>
     </div>
 </div>
-
+    <script src="../frontend/vendors/validator/validator.js"></script>
+    
 </body>
 </html>
 

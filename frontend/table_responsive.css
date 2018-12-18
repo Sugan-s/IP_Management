@@ -1,0 +1,39 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Oct 12, 2018, 2:20:45 PM
+    Author     : Suganya
+*/
+
+.responsive-table {
+    margin:0px auto;
+    width:500px;
+	border: 1px solid #efebeb;
+  
+  }
+  
+  .responsive-table img{height:100px; }
+  
+/*  .responsive-table th {
+    display: none;
+  }
+  */
+  .responsive-table td {
+    display: block;
+	border-top: 1px solid #ddd;
+  }
+  .responsive-table td:first-child{border:none;}
+  .responsive-table td:first-child {
+    padding-top: .5em;
+  }
+  .responsive-table td:last-child {
+    padding-bottom: .5em;
+  }
+  .responsive-table td:before {
+    content: attr(data-th) ": ";
+    display:block;
+	font-weight:bold;
+  }

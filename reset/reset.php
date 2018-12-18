@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" href="frontend/production/images/favicon.png" type="image/ico" />
     
-    <title>IP Management | Login</title>
+    <title>IP Management | Reset</title>
 
     <!-- Bootstrap -->
     <link href="../frontend/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -23,19 +23,9 @@
     <link href="../frontend/build/css/custom.min.css" rel="stylesheet">
     <script src="../frontend/production/js/sweetalert2.all.min.js"></script>
     <script src="../frontend/production/js/jquery.min.js"></script>
-    
-    <style>
-        body  {
-            background-image: url("../frontend/production/images/internet.jpg"),url("../frontend/production/images/slt-log.svg");
-            background-repeat: no-repeat;
-            background-color: #cccccc;
-            background-size: 2560px 1440px;
-            
-            }
-</style>
 </head>
 
-<body>
+<body class="login">
 <div>
     <a class="hiddenanchor" id="signup"></a>
     <a class="hiddenanchor" id="signin"></a>
@@ -43,25 +33,31 @@
     <div class="login_wrapper">
         <div class="animate form login_form">
             <section class="login_content">
-                <form action="loginCredentials.php" method="post">
-                    <h1>Login Form</h1>
+                <form action="resetForm.php" method="post">
+                    <h1>Reset Form</h1>
                     
                     <br>
                     <div>
-                        <input type="text" class="form-control" placeholder="Username" name="userid" id="userid" required="" />
+                        <input type="text" class="form-control" placeholder="User ID" name="usrid" id="usrid" required="" />
                     </div>
+                    
+                    <div>
+                         <input type="text" class="form-control" placeholder="User Name" name="name" id="name" required="" />
+                    </div>
+					
                     <div>
                         <input type="password" class="form-control" placeholder="Password" name="password" id= "password" required="" />
                     </div>
-			<div>
-                        
-                        <button type="submit" class="btn btn-success" name="submit" id="login" value="submit"> Login</button>
-                    </div>
+                    
                     <div>
-                        <a class="reset_pass" href="../reset/reset.php">Reset your password?</a>
-                        
+                        <input type="password" class="form-control" placeholder="New Password" name="newpassword" id= "newpassword" required="" />
                     </div>
-
+                    
+                    <div>
+                        <button type="submit" class="btn btn-success" name="submit" value="submit"> Submit</button>
+                         <a href="../frontend/home.php"> <button class="btn btn-primary" type="button">Cancel</button> </a>
+                    </div>
+                    
                     <div class="clearfix"></div>
 
                 </form>
@@ -69,10 +65,10 @@
         </div>
     </div>
 </div>
-   
-<script src=""></script>
+
 </body>
 </html>
+
 
 
 
